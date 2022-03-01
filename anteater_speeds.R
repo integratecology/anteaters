@@ -29,11 +29,11 @@ print(summary(fit))
 
 speeds <- speeds(l[[1]], fit)
 
-df$speed <- speeds$ML
+df$speed_est <- speeds$est
 df$speed_lcl <- speeds$low
 df$speed_ucl <- speeds$high
+aid <- df$individual.local.identifier[2]
 
-print(paste0("Speed of animal ", spp_file," estimated at ",Sys.time()))
+print(paste0("Speed of animal ", ind_file," estimated at ",Sys.time()))
 
-write.table(df, './results/anteater_speeds.csv', append = TRUE, 
-                row.names = FALSE, col.names = FALSE, sep = ',')
+write.csv(df, paste0("/bigdata/casus/movement/anteaters/results/",aid,".csv"))
