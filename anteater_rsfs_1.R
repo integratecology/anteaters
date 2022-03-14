@@ -6,7 +6,8 @@ library(raster)
 # DATA ####
 # Load data #
 # Sys.setenv(TZ='UTC')
-setwd("/bigdata/casus/movement/anteaters")
+setwd("/home/alston92/proj/anteaters")
+
 
 ind_file <- commandArgs(trailingOnly=TRUE)
 print(ind_file)
@@ -14,10 +15,10 @@ print(ind_file)
 df <- fread(ind_file)
 attr(df$timestamp, "tzone") <- "UTC"
 
-pasture <- raster("/bigdata/casus/movement/anteaters/data/pasture.tif")
-nf <- raster("/bigdata/casus/movement/anteaters/data/native_forest.tif")
-pf <- raster("/bigdata/casus/movement/anteaters/data/planted_forest.tif")
-stream <- raster("/bigdata/casus/movement/anteaters/data/dist2streams.tif")
+pasture <- raster("/home/alston92/proj/anteaters/data/pasture.tif")
+nf <- raster("/home/alston92/proj/anteaters/data/native_forest.tif")
+pf <- raster("/home/alston92/proj/anteaters/data/planted_forest.tif")
+stream <- raster("/home/alston92/proj/anteaters/data/dist2streams.tif")
 
 print(paste0("Data loaded at ",Sys.time()))
 
@@ -40,7 +41,7 @@ print("UD created")
 sTime <- Sys.time()
 
 # Fit the RSFs ###
-rsf <- ctmm:::rsf.fit(l[[1]], UD=ud, R=list(pasture=pasture,nf=nf,pf=pf,stream=stream), debias=TRUE, error=0.05)
+rsf <- ctmm:::rsf.fit(l[[1]], UD=ud, R=list(pasture=pasture,nf=nf,pf=pf,stream=stream), debias=TRUE, error=0.1)
 print("Fitted RSF")
 
 eTime <- Sys.time()

@@ -12,6 +12,7 @@ ind_file <- commandArgs(trailingOnly=TRUE)
 print(ind_file)
 
 df <- fread(ind_file)
+df$temp_d <- abs(df$temp_c - 22)
 attr(df$timestamp, "tzone") <- "UTC"
 
 pasture <- raster("/home/alston92/proj/anteaters/data/pasture.tif")
@@ -22,7 +23,7 @@ stream <- raster("/home/alston92/proj/anteaters/data/dist2streams.tif")
 print(paste0("Data loaded at ",Sys.time()))
 
 # Create a telemetry object (for speeds()o command)
-l <- as.telemetry(df, tz = "UTC", drop=FALSE, keep = "temp_c")
+l <- as.telemetry(df, tz = "UTC", drop=FALSE, keep = "temp_d")
 
 print(paste0("Telemetry object created at ",Sys.time()))
 
@@ -40,7 +41,7 @@ print("UD created")
 sTime <- Sys.time()
 
 # Fit the RSFs ###
-rsf <- ctmm:::rsf.fit(l[[1]], UD=ud, R=list(pasture=pasture,nf=nf,pf=pf,stream=stream), formula=~pasture+nf+pf+stream+pasture:temp_c+nf:temp_c+pf:temp_c+stream:temp_c, debias=TRUE, error=0.08)
+rsf <- ctmm:::rsf.fit(l[[1]], UD=ud, R=list(pasture=pasture,nf=nf,pf=pf,stream=stream), formula=~pasture+nf+pf+stream+pasture:temp_d+nf:temp_d+pf:temp_d+stream:temp_d, debias=TRUE, error=0.08)
 print("Fitted RSF")
 
 eTime <- Sys.time()
@@ -82,5 +83,5 @@ print(paste0("RSF for animal ", ind_file," parameterized at ",Sys.time()))
 x <- data.frame(aid,pasture_est,pasture_lcl,pasture_ucl,nf_est,nf_lcl,nf_ucl,pf_est,pf_lcl,pf_ucl,stream_est,stream_lcl,stream_ucl,pasture_temp_est,pasture_temp_lcl,pasture_temp_ucl,nf_temp_est,nf_temp_lcl,nf_temp_ucl,pf_temp_est,pf_temp_lcl,pf_temp_ucl,stream_temp_est,stream_temp_lcl,stream_temp_ucl,area,area_lcl,area_ucl,runtime)
 
 # Store results in data.frame
-write.table(x, 'results/anteater_rsf_results_2.csv', append=TRUE, row.names=FALSE, col.names=FALSE, sep=',')
+write.table(x, 'results/anteater_rsf_results_3.csv', append=TRUE, row.names=FALSE, col.names=FALSE, sep=',')
 
