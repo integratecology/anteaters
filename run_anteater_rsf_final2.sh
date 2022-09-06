@@ -22,7 +22,7 @@ module load R/3.6.3
 
 cd /home/alston92/proj/anteaters   # where executable and data is located
 
-list=(/home/alston92/proj/anteaters/rsfs/*.Rda)
+list=(/home/alston92/proj/anteaters/rsfs/first_run/*.Rda)
 
 date
 echo "Initiating script"

@@ -15,7 +15,7 @@ load(ind_file)
 
 nf <- raster("/home/alston92/proj/anteaters/data/native_forest.tif")
 pf <- raster("/home/alston92/proj/anteaters/data/planted_forest.tif")
-stream <- raster("/home/alston92/proj/anteaters/data/dist2streams.tif")
+stream <- raster("/home/alston92/proj/anteaters/data/dist2streams_s.tif")
 
 print(paste0("Data loaded at ",Sys.time()))
 
